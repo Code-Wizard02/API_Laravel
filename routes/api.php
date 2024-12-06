@@ -18,5 +18,6 @@ Route::group(
         Route::get('logout', [AuthController::class, 'logout']);
         Route::get('userResource', [AuthController::class, 'userResource']);
         Route::get('userResourceCollection', [AuthController::class, 'userResourceCollection']);
+        Route::get('userResourceCollectionWithMeta', [AuthController::class, 'userResourceCollectionWithMeta']);
     }
 );

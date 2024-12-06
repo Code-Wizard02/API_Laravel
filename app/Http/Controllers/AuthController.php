@@ -94,5 +94,15 @@ class AuthController extends Controller
             'message' => 'User profile using API resource collection',
             'data' => $userData
         ], 200);
-    } 
+    }
+
+    public function userResourceCollectionWithMeta()
+    {
+        $userData = UserResource::collection(User::all());
+        return response()->json([
+            'status' => true,
+            'message' => 'User profile using API resource collection with meta',
+            'data' => $userData
+        ], 200);
+    }
 }
