@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\UserResource;
 
 class AuthController extends Controller
 {
@@ -57,11 +58,41 @@ class AuthController extends Controller
         ], 200);
     }
 
-    public function logout(){
+    public function logout()
+    {
         Auth::user()->tokens()->delete();
         return response()->json([
             'status' => true,
             'message' => 'Logged out'
         ], 200);
     }
+
+    public function userResource()
+    {
+        // $userData = Auth::user();
+        // return response()->json([
+        //     'status' => true,
+        //     'message' => 'User profile',
+        //     'data' => $userData,
+        //     'id' => $userData->id
+        // ], 200);
+
+        $userData = new UserResource(User::findOrFail(Auth::id()));
+        return response()->json([
+            'status' => true,
+            'message' => 'User profile using API resource',
+            'data' => $userData,
+            'id' => Auth::id()
+        ], 200);
+    }
+
+    public function userResourceCollection()
+    {
+        $userData = UserResource::collection(User::all());
+        return response()->json([
+            'status' => true,
+            'message' => 'User profile using API resource collection',
+            'data' => $userData
+        ], 200);
+    } 
 }
